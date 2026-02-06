@@ -7,7 +7,7 @@ const TicketMessageTable = ({ messages }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Content</th>
+            {/* <th>Content</th> */}
             <th>Create Date</th>
             <th>Response Time</th>
             <th>Resolution Time</th>
@@ -28,7 +28,7 @@ const TicketMessageTable = ({ messages }) => {
               return (
                 <tr key={m.id}>
                   <td>{m.id}</td>
-                  <td>{m.content}</td>
+                  {/* <td>{m.content}</td> */}
                   <td>{m.createDate}</td>
                   <td>{m.responseTime}</td>
                   <td>{m.resolutionTime}</td>

@@ -13,25 +13,27 @@ const TicketDetail = ({ ticket, onChange, onSave, isDirty }) => {
       <h2>Ticket Detail</h2>
 
       {/* READ ONLY */}
-     <div className="excel-wrapper">
-  <div className="excel-table">
-    <Field label="ID" value={ticket.id} />
-    <Field label="Ticket Number" value={ticket.ticketNumber} />
-    <Field label="Partner ID" value={ticket.partnerId} />
-    <Field label="Parent Company ID" value={ticket.parentCompanyId} />
-    <Field label="Product ID" value={ticket.productId} />
-    <Field label="Priority ID" value={ticket.priorityId} />
-    <Field label="SLA ID" value={ticket.slaId} />
-    <Field label="Response Time" value={ticket.responseTime} />
-    <Field label="Resolution Time" value={ticket.resolutionTime} />
-    <Field label="Countdown Condition" value={ticket.countdownCondition} />
-    <Field label="Create Date" value={ticket.createDate} />
-    <Field label="Close Time" value={ticket.closeTime} />
-    <Field label="Close Date" value={ticket.closeDate} />
-    <Field label="Response To Close" value={ticket.responseToClose} />
-    <Field label="Start Res (No GMT)" value={ticket.startResolutionTimeNoGmt} />
-    <Field label="End Res (No GMT)" value={ticket.endResolutionTimeNoGmt} />
-  </div>
+<div className="excel-wrapper">
+<div className="excel-table">
+  <Field label="ID" value={ticket.id} />
+  <Field label="Ticket Number" value={ticket.ticketNumber} />
+
+  <Field label="Company" value={ticket.partner?.name ?? "-"} />
+  <Field label="PIC ID" value={ticket.userId ?? "-"} />
+  <Field label="Product" value={ticket.product?.name ?? "-"} />
+  <Field label="Priority" value={ticket.priority?.name ?? "-"} />
+
+  <Field label="SLA ID" value={ticket.slaId} />
+  <Field label="Response Time" value={ticket.responseTime} />
+  <Field label="Resolution Time" value={ticket.resolutionTime} />
+  <Field label="Countdown Condition" value={ticket.countdownCondition} />
+  <Field label="Create Date" value={ticket.createDate} />
+  <Field label="Close Time" value={ticket.closeTime} />
+  <Field label="Close Date" value={ticket.closeDate} />
+  <Field label="Response To Close" value={ticket.responseToClose} />
+  <Field label="Start Res (No GMT)" value={ticket.startResolutionTimeNoGmt} />
+  <Field label="End Res (No GMT)" value={ticket.endResolutionTimeNoGmt} />
+</div>
 </div>
 
 

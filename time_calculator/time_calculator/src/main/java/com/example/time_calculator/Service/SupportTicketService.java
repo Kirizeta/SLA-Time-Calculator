@@ -20,10 +20,32 @@ public class SupportTicketService {
     public SupportTicket GetSupportTicketById(Long id) {
         return supportTicketRepository.findById(id).orElse(null);
     }
+
     public Page<SupportTicket> getAllSupportTicket(int page, int size){
+
         Pageable pageable = PageRequest.of(page, size);
-        return supportTicketRepository.findAll(pageable);
+
+        Page<SupportTicket> tickets = supportTicketRepository.findAll(pageable);
+
+        // Optional: kalau mau trigger lazy load / debug
+        tickets.forEach(ticket -> {
+
+            if(ticket.getPartner() != null)
+                ticket.getPartner().getName();
+
+            if(ticket.getProduct() != null)
+                ticket.getProduct().getName();
+
+            if(ticket.getPriority() != null)
+                ticket.getPriority().getName();
+
+            if(ticket.getUser() != null)
+                ticket.getUser().getId();
+        });
+
+        return tickets;
     }
+
 
 
     public SupportTicket updateSupportTicketById(Long id, SupportTicketDTO supportTicket) {
@@ -42,13 +64,13 @@ public class SupportTicketService {
         existingTicket.setEndResolutionTime(supportTicket.getEndResolutionTime());
 
 
-        double responseToClose =
+        double totalResolutionTime =
                 Duration.between(
-                        existingTicket.getStartResolutionTime(),
+                        existingTicket.getCreateDateTime(),
                         existingTicket.getEndResolutionTime()
-                ).toMinutes() / 60.0;
+                ).toMillis() / (1000.0 * 60 * 60);
 
-        existingTicket.setResponseToClose(responseToClose);
+        existingTicket.setResponseToClose(totalResolutionTime);
 
 
         return supportTicketRepository.save(existingTicket);
