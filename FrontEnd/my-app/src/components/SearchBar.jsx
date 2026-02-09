@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({
@@ -8,48 +8,70 @@ const SearchBar = ({
   tickets = []
 }) => {
 
-  // ✅ console log isi tickets
-  useEffect(() => {
-    console.log("ISI TICKETS:", tickets);
-    if (Array.isArray(tickets)) {
-      tickets.forEach((t, i) =>
-        console.log(`Ticket ${i}:`, t)
-      );
-    }
-  }, [tickets]);
+  // useEffect(() => {
+  //   console.log("ISI TICKETS:", tickets);
+  // }, [tickets]);
 
+  /* ===== SELECT ===== */
   const handleSelect = (e) => {
-    const selectedId = e.target.value;
+    const selectedId = e.target.value
+      ? Number(e.target.value)
+      : "";
+
     onChange(selectedId);
-    if (selectedId) onSearch(selectedId);
+
+    if (selectedId) {
+      onSearch(selectedId);
+    }
+  };
+
+  /* ===== INPUT ===== */
+  const handleInput = (e) => {
+    const val = e.target.value;
+
+    if (val === "") {
+      onChange("");
+    } else {
+      onChange(Number(val));
+    }
   };
 
   return (
     <div className="search-container">
-        
       <div className="search-box">
-           
-        <select value={value} onChange={handleSelect}>
+
+        {/* ===== DROPDOWN ===== */}
+        <select value={value || ""} onChange={handleSelect}>
           <option value="">-- Pilih Ticket --</option>
 
-        {Array.isArray(tickets) &&
-         [...tickets] // 🔥 clone biar tidak mutasi state
-           .sort((a, b) => b.id - a.id) // DESC
-           .map((t) => (
-             <option key={t.id} value={t.id}>
-               {t.id} - {t.ticket_number || t.ticketNumber}
-             </option>
-           ))}
-
+          {Array.isArray(tickets) &&
+            [...tickets]
+              .filter((t, i, arr) =>
+                arr.findIndex(x => x.id === t.id) === i
+              ) // ⭐ REMOVE DUPLICATE ID
+              .sort((a, b) => b.id - a.id)
+              .map((t, index) => (
+                <option
+                  key={`${t.id}-${index}`} // ⭐ FIX DUP KEY
+                  value={t.id}
+                >
+                  {t.id} - {t.ticketNumber || "-"}
+                </option>
+              ))}
         </select>
 
+        {/* ===== MANUAL INPUT ===== */}
         <input
           placeholder="Masukkan Ticket ID"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={value || ""}
+          onChange={handleInput}
         />
 
-        <button onClick={() => onSearch()}>Search</button>
+        {/* ===== SEARCH BUTTON ===== */}
+        <button onClick={() => value && onSearch(Number(value))}>
+          Search
+        </button>
+
       </div>
     </div>
   );

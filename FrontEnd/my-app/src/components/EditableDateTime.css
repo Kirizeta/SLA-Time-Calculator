@@ -1,7 +1,7 @@
 .edit-row {
   display: grid;
-  grid-template-columns: 150px 300px; /* kiri & kanan fix */
-  width: max-content; /* atau hapus kalau mau fix parent */
+  grid-template-columns: minmax(150px, 200px) 1fr;
+  width: 100%;
   align-items: center;
   border: 1px solid #d0d7de;
   border-bottom: none;
@@ -9,40 +9,42 @@
   font-family: "Segoe UI", Tahoma, Arial, sans-serif;
 }
 
-
-/* LAST ROW BORDER FIX */
 .edit-row:last-child {
   border-bottom: 1px solid #d0d7de;
 }
 
-/* LABEL CELL */
+/* LABEL */
 .edit-row label {
   padding: 8px 10px;
   background: #e5f0ff;
   border-right: 1px solid #d0d7de;
   font-size: 13px;
   font-weight: 600;
-  white-space: nowrap;
 }
 
-/* INPUT CELL */
+/* INPUT */
 .edit-row input {
   padding: 6px 10px;
   font-size: 13px;
   border: none;
   outline: none;
   background: #ffffff;
-  min-width: 220px;
+  width: 100%;
 }
 
-/* INPUT FOCUS */
 .edit-row input:focus {
   background: #eff6ff;
   box-shadow: inset 0 0 0 1px #2563eb;
 }
 
-/* HOVER FEEL */
 .edit-row:hover label,
 .edit-row:hover input {
   background: #f0f9ff;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .edit-row {
+    grid-template-columns: 1fr;
+  }
 }

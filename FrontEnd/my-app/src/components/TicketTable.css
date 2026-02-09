@@ -1,4 +1,16 @@
-/* WRAPPER: SCROLL AREA */
+/* ================= CARD WRAPPER ================= */
+.card {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+/* ================= WRAPPER SCROLL ================= */
 .excel-wrapper {
   border: 1px solid #cbd5e1;
   overflow: auto;
@@ -6,19 +18,19 @@
   background: #ffffff;
 }
 
-/* TABLE */
+/* ================= GRID TABLE ================= */
 .excel-table {
   display: grid;
-  grid-template-columns: max-content auto;
-  min-width: max-content;
+  grid-template-columns: minmax(160px, 220px) 1fr;
+  width: 100%;
 }
 
-/* ROW */
+/* ================= ROW ================= */
 .field {
   display: contents;
 }
 
-/* LABEL CELL */
+/* ================= LABEL ================= */
 .field label {
   padding: 6px 10px;
   background: #f1f5f9;
@@ -32,45 +44,49 @@
   z-index: 2;
 }
 
-/* VALUE CELL */
+/* ================= VALUE ================= */
 .field input {
   padding: 6px 10px;
   border: none;
   border-bottom: 1px solid #e5e7eb;
   font-size: 13px;
   background: #ffffff;
-  white-space: nowrap;
-  min-width: 200px;
+  width: 100%;
 }
 
-/* DISABLED INPUT */
+/* ================= DISABLED ================= */
 .field input:disabled {
   color: #111827;
 }
 
-/* ROW HOVER (EXCEL FEEL) */
+/* ================= HOVER ================= */
 .field label:hover,
 .field input:hover {
   background: #e0f2fe;
 }
 
+/* ================= EDIT SECTION ================= */
 .edit-section {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   align-items: flex-start;
 }
 
-/* Editable table tetap auto-size */
+/* ================= EDIT TABLE ================= */
 .edit-table {
   border: 1px solid #d0d7de;
+  width: 100%;
+  max-width: 520px;
 }
 
-/* ACTION PANEL */
+/* ================= ACTION ================= */
 .edit-actions {
   display: flex;
   align-items: flex-start;
 }
 
+/* ================= BUTTON ================= */
 .btn-save {
   padding: 8px 14px;
   font-size: 14px;
@@ -80,19 +96,32 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  white-space: nowrap;
   transition: background 0.2s, opacity 0.2s;
 }
 
-/* Disabled state */
 .btn-save:disabled {
   background: #9ca3af;
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-/* Hover */
 .btn-save:not(:disabled):hover {
   background: #15803d;
 }
 
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+
+  .excel-table {
+    grid-template-columns: 1fr;
+  }
+
+  .field label {
+    position: static;
+  }
+
+  .edit-section {
+    flex-direction: column;
+  }
+
+}

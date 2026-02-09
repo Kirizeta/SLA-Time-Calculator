@@ -25,10 +25,14 @@ public class SupportTicketMessageController {
     public List<SupportTicketMessage> getSupportTicketMessages(@RequestParam Long id){
         return supportTicketMessageServivce.findSupportTicketMessagesByTicketId(id);
     }
+    @CrossOrigin(origins = "*")
 
-    @PutMapping("/ticket/edits")
-    public SupportTicketMessage updateSupportTicketStatus(@RequestParam Long id, @RequestBody SupportTicketMessageDTO supportTicketMessage){
-        return supportTicketMessageServivce.updateSupportTicketByIdMassage(id, supportTicketMessage);
+    @PutMapping("/ticket/message/edit")
+    public SupportTicketMessage updateSupportTicketMessage(
+            @RequestParam Long id,
+            @RequestBody SupportTicketMessageDTO dto
+    ) {
+        return supportTicketMessageServivce.updateSupportTicketByIdMassage(id, dto);
     }
 
 }

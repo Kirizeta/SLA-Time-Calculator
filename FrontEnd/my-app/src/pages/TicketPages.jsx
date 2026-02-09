@@ -1,9 +1,10 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchTicketById,
   fetchMessagesByTicketId,
   updateTicket,
-  fetchTickets
+  fetchTickets,
+  updateMessage
 } from "../api/ticket_api";
 
 import SearchBar from "../components/SearchBar";
@@ -11,98 +12,102 @@ import TicketDetail from "../components/TicketTable";
 import TicketMessageTable from "../components/TicketMessageTable";
 
 const TicketPage = () => {
+
   const [ticketId, setTicketId] = useState("");
-  const [ticket, setTicket] = useState(null);
   const [editedTicket, setEditedTicket] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
 
-  const [ticketList, setTicketList] = useState([]); 
-
-
+  /* LOAD LIST */
   useEffect(() => {
-    const loadTickets = async () => {
+    const load = async () => {
       try {
         const res = await fetchTickets();
-        setTicketList(res.data.content);
+        setTicketList(res.data.content || []);
       } catch (err) {
         console.error(err);
       }
     };
-         console.log("ticketList:", ticketList, Array.isArray(ticketList));
-    loadTickets();
- 
-
+    load();
   }, []);
 
-
+  /* LOAD SINGLE TICKET */
   const loadTicketData = async () => {
-    const id = Number(ticketId);
-    if (!id) return alert("Ticket ID tidak valid");
+    if (!ticketId) return;
 
     try {
-      const ticketRes = await fetchTicketById(id);
-      const messageRes = await fetchMessagesByTicketId(id);
+      const ticketRes = await fetchTicketById(ticketId);
+      const msgRes = await fetchMessagesByTicketId(ticketId);
 
-      setTicket(ticketRes.data);
-      setEditedTicket(ticketRes.data); // 🔥 clone untuk edit
-      setMessages(messageRes.data);
+      setEditedTicket(ticketRes.data);
+      setMessages(msgRes.data || []);
       setIsDirty(false);
-      
 
     } catch (err) {
       console.error(err);
-      alert("Gagal mengambil data ticket");
     }
   };
 
-  // Editable field handler
+  /* EDIT TICKET FIELD */
   const handleFieldChange = (field, value) => {
-    setEditedTicket((prev) => ({
+    setEditedTicket(prev => ({
       ...prev,
       [field]: value
     }));
     setIsDirty(true);
   };
 
-  const handleSave = async () => {
+  /* SAVE TICKET */
+  const handleSaveTicket = async () => {
     try {
-      await updateTicket(editedTicket);
-      setTicket(editedTicket);
+      await updateTicket(editedTicket.id, {
+        createDateTime: editedTicket.createDateTime,
+        startResolutionTime: editedTicket.startResolutionTime,
+        endResolutionTime: editedTicket.endResolutionTime
+      });
+
+      alert("Ticket saved");
       setIsDirty(false);
-      alert("✅ Data berhasil disimpan");
+
     } catch (err) {
       console.error(err);
-      alert("❌ Gagal menyimpan data");
     }
   };
 
+  /* SAVE MESSAGE */
+  const handleSaveMessage = async (id, payload) => {
+    try {
+      await updateMessage(id, payload);
+      alert("Message saved");
 
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="container">
-      <div className="section">
-        <SearchBar
-          value={ticketId}
-          onChange={setTicketId}
-          onSearch={loadTicketData}
-          tickets={ticketList}
-          
-        />
-      </div>
 
-      <div className="section">
-        <TicketDetail
-          ticket={editedTicket}
-          onChange={handleFieldChange}
-          onSave={handleSave}
-          isDirty={isDirty}
-        />
-      </div>
+      <SearchBar
+        value={ticketId}
+        onChange={setTicketId}
+        onSearch={loadTicketData}
+        tickets={ticketList}
+      />
 
-      <div className="section">
-        <TicketMessageTable messages={messages} />
-      </div>
+      <TicketDetail
+        ticket={editedTicket}
+        onChange={handleFieldChange}
+        onSave={handleSaveTicket}
+        isDirty={isDirty}
+      />
+
+      <TicketMessageTable
+        messages={messages}
+        onSaveMessage={handleSaveMessage}
+      />
+
     </div>
   );
 };

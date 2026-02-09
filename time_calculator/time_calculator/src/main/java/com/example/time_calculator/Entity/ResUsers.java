@@ -13,6 +13,6 @@ public class ResUsers {
 
     private Boolean share;
 
-//    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-//    private HrEmployee employee;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private HrEmployee employee;
 }

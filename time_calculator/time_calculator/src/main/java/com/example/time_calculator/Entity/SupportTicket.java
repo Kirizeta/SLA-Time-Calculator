@@ -96,7 +96,7 @@ public class SupportTicket {
     private Double timeToClose;
 
     @Column(name = "planned_time")
-    private Double plannedTime;
+    private LocalDateTime plannedTime;
 
     @Column(name = "approval_id")
     private Long approvalId;
@@ -242,4 +242,5 @@ public class SupportTicket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "priority_id", insertable = false, updatable = false)
     private TicketPriority priority;
+
 }

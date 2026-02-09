@@ -1,16 +1,16 @@
 package com.example.time_calculator.Service;
 
-import java.time.Duration;
-
+import com.example.time_calculator.Entity.SupportTicket;
+import com.example.time_calculator.Repository.SupportTicketRepository;
+import com.example.time_calculator.dto.SupportTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.time_calculator.Entity.SupportTicket;
-import com.example.time_calculator.Repository.SupportTicketRepository;
-import com.example.time_calculator.dto.SupportTicketDTO;
+import java.util.List;
+import java.time.Duration;
 
 @Service
 public class SupportTicketService {
@@ -45,34 +45,62 @@ public class SupportTicketService {
 
         return tickets;
     }
-    //tes
 
 
 
-    public SupportTicket updateSupportTicketById(Long id, SupportTicketDTO supportTicket) {
+    public SupportTicket updateSupportTicketById(Long id, SupportTicketDTO dto) {
 
-        SupportTicket existingTicket = GetSupportTicketById(id);
+        SupportTicket existingTicket = supportTicketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found " + id));
 
-        existingTicket.setCreateDate(supportTicket.getCreateDateTime().minusHours(7));
-        existingTicket.setStartResolutionTimeNoGmt(supportTicket.getCreateDateTime().minusHours(7));
-        existingTicket.setCloseTime(supportTicket.getEndResolutionTime().minusHours(7));
-        existingTicket.setEndResolutionTimeNoGmt(supportTicket.getEndResolutionTime().minusHours(7));
+        /* CREATE */
+        if(dto.getCreateDateTime() != null){
+            existingTicket.setCreateDateTime(dto.getCreateDateTime());
+            existingTicket.setCreateDate(dto.getCreateDateTime().minusHours(7));
+        }
 
-        existingTicket.setCloseDate(existingTicket.getCloseTime().toLocalDate());
+        /* START RES */
+        if(dto.getStartResolutionTime() != null){
+            existingTicket.setStartResolutionTime(dto.getStartResolutionTime());
+            existingTicket.setStartResolutionTimeNoGmt(
+                    dto.getStartResolutionTime().minusHours(7)
+            );
+        }
 
-        existingTicket.setCreateDateTime(supportTicket.getCreateDateTime());
-        existingTicket.setStartResolutionTime(supportTicket.getStartResolutionTime());
-        existingTicket.setEndResolutionTime(supportTicket.getEndResolutionTime());
+        /* END RES */
+        if(dto.getEndResolutionTime() != null){
+            existingTicket.setEndResolutionTime(dto.getEndResolutionTime());
+            existingTicket.setEndResolutionTimeNoGmt(
+                    dto.getEndResolutionTime().minusHours(7)
+            );
 
+            existingTicket.setCloseTime(dto.getEndResolutionTime().minusHours(7));
+        }
 
-        double totalResolutionTime =
-                Duration.between(
-                        existingTicket.getCreateDateTime(),
-                        existingTicket.getEndResolutionTime()
-                ).toMillis() / (1000.0 * 60 * 60);
+        /* CLOSE DATE */
+        if(existingTicket.getCloseTime() != null){
+            existingTicket.setCloseDate(existingTicket.getCloseTime().toLocalDate());
+        }
 
-        existingTicket.setResponseToClose(totalResolutionTime);
+        /* TOTAL RES */
+        if(existingTicket.getCreateDateTime() != null &&
+                existingTicket.getStartResolutionTime() != null &&
+                existingTicket.getEndResolutionTime() != null){
 
+            long responseMs = Duration.between(
+                    existingTicket.getCreateDateTime(),
+                    existingTicket.getStartResolutionTime()
+            ).toMillis();
+
+            long resolutionMs = Duration.between(
+                    existingTicket.getStartResolutionTime(),
+                    existingTicket.getEndResolutionTime()
+            ).toMillis();
+
+            double totalHours = (responseMs + resolutionMs) / (1000.0 * 60 * 60);
+
+            existingTicket.setResponseToClose(totalHours);
+        }
 
         return supportTicketRepository.save(existingTicket);
     }

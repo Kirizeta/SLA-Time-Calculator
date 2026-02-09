@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupportTicketDTO {
-
+    private Long id;
     private LocalDateTime createDateTime;
     private LocalDateTime startResolutionTime;
     private LocalDateTime endResolutionTime;

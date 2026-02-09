@@ -34,12 +34,29 @@ public class SupportTicketMessageServivce {
         return messages;
     }
 
-    public SupportTicketMessage updateSupportTicketByIdMassage (Long id, SupportTicketMessageDTO supportTicketMessage) {
-        SupportTicketMessage existingMessage = findSupportTicketMessageById(id);
+    public SupportTicketMessage updateSupportTicketByIdMassage(
+            Long id,
+            SupportTicketMessageDTO dto
+    ) {
 
-        existingMessage.setCreateDate(supportTicketMessage.getCreateDate());
-        existingMessage.setResponseTime(supportTicketMessage.getResponseTime());
-        existingMessage.setResolutionTime(supportTicketMessage.getResolutionTime());
+        SupportTicketMessage existingMessage =
+                repository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Message not found id=" + id));
+
+        if (dto.getCreateDate() != null) {
+            existingMessage.setCreateDate(dto.getCreateDate());
+        }
+
+        if (dto.getResponseTime() != null) {
+            existingMessage.setResponseTime(dto.getResponseTime());
+        }
+
+        if (dto.getResolutionTime() != null) {
+            existingMessage.setResolutionTime(dto.getResolutionTime());
+        }
+
+        System.out.println("Existing message : " +existingMessage);
 
         return repository.save(existingMessage);
     }

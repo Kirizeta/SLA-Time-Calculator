@@ -15,5 +15,6 @@ public class HrEmployee {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private ResUsers user;
 }
