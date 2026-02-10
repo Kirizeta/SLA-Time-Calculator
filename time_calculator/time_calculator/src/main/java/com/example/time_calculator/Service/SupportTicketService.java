@@ -3,50 +3,57 @@ package com.example.time_calculator.Service;
 import com.example.time_calculator.Entity.SupportTicket;
 import com.example.time_calculator.Repository.SupportTicketRepository;
 import com.example.time_calculator.dto.SupportTicketDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.time.Duration;
 
 @Service
 public class SupportTicketService {
+
     @Autowired
     SupportTicketRepository supportTicketRepository;
 
-    public SupportTicket GetSupportTicketById(Long id) {
+    /* ================= SAFE GET BY ID ================= */
+
+    public SupportTicket getSupportTicketByIdSafe(Long id) {
         return supportTicketRepository.findById(id).orElse(null);
     }
+
+    /* ================= GET ALL ================= */
 
     public Page<SupportTicket> getAllSupportTicket(int page, int size){
 
         Pageable pageable = PageRequest.of(page, size);
-
         Page<SupportTicket> tickets = supportTicketRepository.findAll(pageable);
 
-        // Optional: kalau mau trigger lazy load / debug
+        // Trigger lazy load supaya tidak error saat serialize JSON
         tickets.forEach(ticket -> {
 
-            if(ticket.getPartner() != null)
-                ticket.getPartner().getName();
+            try {
+                if(ticket.getPartner() != null)
+                    ticket.getPartner().getName();
 
-            if(ticket.getProduct() != null)
-                ticket.getProduct().getName();
+                if(ticket.getProduct() != null)
+                    ticket.getProduct().getName();
 
-            if(ticket.getPriority() != null)
-                ticket.getPriority().getName();
+                if(ticket.getPriority() != null)
+                    ticket.getPriority().getName();
 
-            if(ticket.getUser() != null)
-                ticket.getUser().getId();
+                if(ticket.getUser() != null)
+                    ticket.getUser().getId();
+
+            } catch (Exception e){
+                System.out.println("Lazy load error : " + e.getMessage());
+            }
         });
 
         return tickets;
     }
 
-
+    /* ================= UPDATE ================= */
 
     public SupportTicket updateSupportTicketById(Long id, SupportTicketDTO dto) {
 
@@ -74,12 +81,16 @@ public class SupportTicketService {
                     dto.getEndResolutionTime().minusHours(7)
             );
 
-            existingTicket.setCloseTime(dto.getEndResolutionTime().minusHours(7));
+            existingTicket.setCloseTime(
+                    dto.getEndResolutionTime().minusHours(7)
+            );
         }
 
         /* CLOSE DATE */
         if(existingTicket.getCloseTime() != null){
-            existingTicket.setCloseDate(existingTicket.getCloseTime().toLocalDate());
+            existingTicket.setCloseDate(
+                    existingTicket.getCloseTime().toLocalDate()
+            );
         }
 
         /* TOTAL RES */

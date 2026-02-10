@@ -1,5 +1,6 @@
 package com.example.time_calculator.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -237,6 +238,7 @@ public class SupportTicket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
     private ResUsers user;
 
     @ManyToOne(fetch = FetchType.LAZY)
