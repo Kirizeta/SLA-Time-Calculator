@@ -29,7 +29,6 @@ public class SupportTicketService {
         Pageable pageable = PageRequest.of(page, size);
         Page<SupportTicket> tickets = supportTicketRepository.findAll(pageable);
 
-        // Trigger lazy load supaya tidak error saat serialize JSON
         tickets.forEach(ticket -> {
 
             try {

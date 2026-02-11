@@ -27,7 +27,6 @@ public class SupportTicketMessageServivce {
         return message.get();
     }
 
-//    Buat yang return array tapi ambil dari ticket_id
     public List<SupportTicketMessage> findSupportTicketMessagesByTicketId(Long ticketId) {
         List<SupportTicketMessage> messages = repository.findAllByTicketId(ticketId);
 
