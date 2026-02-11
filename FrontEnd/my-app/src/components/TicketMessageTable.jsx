@@ -24,8 +24,6 @@ const formatTextDate = (val) => {
   }
 };
 
-
-
 const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
 
   const [editedRows, setEditedRows] = useState({});
@@ -41,18 +39,55 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
     }));
   };
 
+  /* ===== CHECK DIRTY ===== */
+  const isRowDirty = (msg) => {
+    const edited = editedRows[msg.id];
+    if (!edited) return false;
+
+    if (
+      edited.createDate !== undefined &&
+      edited.createDate !== formatTextDate(msg.createDate)
+    ) return true;
+
+    if (
+      edited.responseTime !== undefined &&
+      edited.responseTime !== msg.responseTime
+    ) return true;
+
+    if (
+      edited.resolutionTime !== undefined &&
+      edited.resolutionTime !== msg.resolutionTime
+    ) return true;
+
+    return false;
+  };
+
   /* ===== SAVE ===== */
   const handleSave = (msg) => {
     const edited = editedRows[msg.id];
     if (!edited || !onSaveMessage) return;
 
     const payload = {
-      createDate: edited.createDate !== undefined ? `${edited.createDate.split(" ")[0]}T${edited.createDate.split(" ")[1]}` : msg.createDate,
-      responseTime: edited.responseTime ?? msg.responseTime,
-      resolutionTime: edited.resolutionTime ?? msg.resolutionTime
+      createDate:
+        edited.createDate !== undefined
+          ? `${edited.createDate.split(" ")[0]}T${edited.createDate.split(" ")[1]}`
+          : msg.createDate,
+
+      responseTime:
+        edited.responseTime ?? msg.responseTime,
+
+      resolutionTime:
+        edited.resolutionTime ?? msg.resolutionTime
     };
 
     onSaveMessage(msg.id, payload);
+
+    /* 🔥 RESET DIRTY ROW */
+    setEditedRows(prev => {
+      const copy = { ...prev };
+      delete copy[msg.id];
+      return copy;
+    });
   };
 
   return (
@@ -79,12 +114,12 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
             messages.map((m, index) => {
 
               const edited = editedRows[m.id] || {};
+              const dirty = isRowDirty(m);
 
               return (
                 <tr key={`${m.id}-${index}`}>
                   <td>{m.id}</td>
 
-                  {/* CREATE DATE TEXT */}
                   <td>
                     <input
                       type="text"
@@ -103,7 +138,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                     />
                   </td>
 
-                  {/* RESPONSE */}
                   <td>
                     <input
                       type="number"
@@ -123,7 +157,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                     />
                   </td>
 
-                  {/* RESOLUTION */}
                   <td>
                     <input
                       type="number"
@@ -144,7 +177,10 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                   </td>
 
                   <td>
-                    <button onClick={() => handleSave(m)}>
+                    <button
+                      disabled={!dirty}
+                      onClick={() => handleSave(m)}
+                    >
                       Save
                     </button>
                   </td>

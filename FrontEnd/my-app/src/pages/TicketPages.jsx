@@ -19,20 +19,26 @@ const TicketPage = () => {
   const [ticketList, setTicketList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
 
-  /* LOAD LIST */
+  /* ===============================
+     LOAD TICKET LIST (GLOBAL TABLE)
+  =============================== */
+  const loadTicketList = async () => {
+    try {
+      const res = await fetchTickets();
+      setTicketList(res.data.content || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /* LOAD LIST FIRST TIME */
   useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await fetchTickets();
-        setTicketList(res.data.content || []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    load();
+    loadTicketList();
   }, []);
 
-  /* LOAD SINGLE TICKET */
+  /* ===============================
+     LOAD SINGLE TICKET + MESSAGE
+  =============================== */
   const loadTicketData = async () => {
     if (!ticketId) return;
 
@@ -49,7 +55,9 @@ const TicketPage = () => {
     }
   };
 
-  /* EDIT TICKET FIELD */
+  /* ===============================
+     EDIT TICKET FIELD
+  =============================== */
   const handleFieldChange = (field, value) => {
     setEditedTicket(prev => ({
       ...prev,
@@ -58,7 +66,9 @@ const TicketPage = () => {
     setIsDirty(true);
   };
 
-  /* SAVE TICKET */
+  /* ===============================
+     SAVE TICKET + AUTO REFRESH TABLE
+  =============================== */
   const handleSaveTicket = async () => {
     try {
       await updateTicket(editedTicket.id, {
@@ -66,6 +76,12 @@ const TicketPage = () => {
         startResolutionTime: editedTicket.startResolutionTime,
         endResolutionTime: editedTicket.endResolutionTime
       });
+
+      /* ⭐ AUTO REFRESH LIST */
+      await loadTicketList();
+
+      /* ⭐ OPTIONAL REFRESH DETAIL */
+      await loadTicketData();
 
       alert("Ticket saved");
       setIsDirty(false);
@@ -75,10 +91,16 @@ const TicketPage = () => {
     }
   };
 
-  /* SAVE MESSAGE */
+  /* ===============================
+     SAVE MESSAGE
+  =============================== */
   const handleSaveMessage = async (id, payload) => {
     try {
       await updateMessage(id, payload);
+
+      /* OPTIONAL REFRESH MESSAGE LIST */
+      await loadTicketData();
+
       alert("Message saved");
 
     } catch (err) {
@@ -86,6 +108,9 @@ const TicketPage = () => {
     }
   };
 
+  /* ===============================
+     RENDER
+  =============================== */
   return (
     <div className="container">
 
