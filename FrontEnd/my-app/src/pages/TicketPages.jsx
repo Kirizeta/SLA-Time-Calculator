@@ -7,6 +7,7 @@ import {
   updateMessage
 } from "../api/ticket_api";
 
+import MainLayout from "../layout/MainLayout";
 import SearchBar from "../components/SearchBar";
 import TicketDetail from "../components/TicketTable";
 import TicketMessageTable from "../components/TicketMessageTable";
