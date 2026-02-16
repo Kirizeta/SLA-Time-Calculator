@@ -1,22 +1,29 @@
 import React from "react";
 import "./Topbar.css";
 
-const Topbar = ({ toggleSidebar }) => {
-
+const Topbar = ({ toggleSidebar, isOpen }) => {
   const handleLogout = () => {
-    // hapus token / session
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
-    // redirect login
     window.location.href = "/login";
   };
 
   return (
     <div className="topbar">
+      <div className="topbar-left-group">
+        <div
+          className={`topbar-left ${isOpen ? "open" : ""}`}
+          onClick={toggleSidebar}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
-      <div className="topbar-left" onClick={toggleSidebar}>
-        ☰
+        {/* TEXT muncul saat sidebar CLOSE */}
+        <span className={`cs-text ${isOpen ? "hide" : "show"}`}>
+          Customer Support
+        </span>
       </div>
 
       <div className="topbar-right">
@@ -28,10 +35,8 @@ const Topbar = ({ toggleSidebar }) => {
           Logout
         </button>
       </div>
-
     </div>
   );
 };
 
 export default Topbar;
-

@@ -5,6 +5,9 @@ import "./LoginPage.css";
 import eyeIcon from "../Picture/eye.png";
 import hiddenIcon from "../Picture/hidden.png";
 import userIcon from "../Picture/user.png"; 
+import girlImage from "../Picture/Login_icon_pepole.png";
+import logoAbhi from "../Picture/Logofixone.png";
+
 
 const LoginPage = () => {
 
@@ -29,7 +32,16 @@ const LoginPage = () => {
 
       {/* LEFT */}
       <div className="login-card">
-        <h2>Hi, Welcome!</h2>
+        <h2 className="login-title">
+          <span className="typing-line">
+            Welcome to IT Support
+          </span>
+          <br />
+          <strong className="typing-company">
+            PT Abhimata Persada
+          </strong>
+        </h2>
+
 
         {/* USER INPUT */}
         <div className="input-wrapper">
@@ -67,7 +79,23 @@ const LoginPage = () => {
       </div>
 
       {/* RIGHT BACKGROUND */}
-      <div className="login-bg"></div>
+        <div className="login-bg">
+          <div className="bg-gradient"></div>
+
+          <img
+            src={girlImage}
+            alt="customer service"
+            className="girl-img"
+          />
+
+          <img
+            src={logoAbhi}
+            alt="logo"
+            className="logo-overlay"
+          />
+        </div>
+
+
 
     </div>
   );
