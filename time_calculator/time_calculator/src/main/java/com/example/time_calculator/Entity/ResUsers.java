@@ -3,6 +3,8 @@ package com.example.time_calculator.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "res_users")
 @Data
@@ -13,6 +15,12 @@ public class ResUsers {
 
     private Boolean share;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private HrEmployee employee;
+    private Boolean active;
+
+    private String login;
+
+    private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<HrEmployee> employees;
 }

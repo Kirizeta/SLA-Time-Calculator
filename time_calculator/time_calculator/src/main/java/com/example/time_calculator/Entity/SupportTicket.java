@@ -1,6 +1,7 @@
 package com.example.time_calculator.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -244,5 +245,21 @@ public class SupportTicket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "priority_id", insertable = false, updatable = false)
     private TicketPriority priority;
+
+
+    @JsonProperty("picName")
+    public String getPicName() {
+
+        if (user == null) return null;
+        if (user.getEmployees() == null) return null;
+
+        return user.getEmployees()
+                .stream()
+                .filter(emp -> Boolean.TRUE.equals(emp.getActive()))
+                .map(HrEmployee::getName)
+                .findFirst()
+                .orElse(null);
+    }
+
 
 }

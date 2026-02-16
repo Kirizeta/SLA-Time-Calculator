@@ -1,16 +1,33 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
-import Logo from "../Picture/abhlogo.png";
 
-const Sidebar = () => {
+import LogoFull from "../Picture/Logofixone.png";
+import LogoMini from "../Picture/Logo2.png";
+
+const Sidebar = ({ open }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${open ? "open" : "close"}`}>
 
-      {/* LOGO */}
+      {/* LOGO AREA */}
       <div className="sidebar-logo">
-        <img src={Logo} alt="Logo" />
-        <small>IT Support</small>
+
+        <img
+          src={LogoFull}
+          alt="Logo Full"
+          className={`logo logo-full ${open ? "show" : "hide"}`}
+        />
+
+        <img
+          src={LogoMini}
+          alt="Logo Mini"
+          className={`logo logo-mini ${open ? "hide" : "show"}`}
+        />
+
+        <small className={`logo-text ${open ? "show" : "hide"}`}>
+          IT Support
+        </small>
+
       </div>
 
       {/* MENU */}
@@ -24,7 +41,7 @@ const Sidebar = () => {
             isActive ? "menu-item active" : "menu-item"
           }
         >
-          🏠 Home
+          🏠 <span>Dashboard</span>
         </NavLink>
 
         <NavLink
@@ -33,7 +50,7 @@ const Sidebar = () => {
             isActive ? "menu-item active" : "menu-item"
           }
         >
-          🧾 Ticket Edit
+          🧾 <span>Ticket Edit</span>
         </NavLink>
 
       </div>

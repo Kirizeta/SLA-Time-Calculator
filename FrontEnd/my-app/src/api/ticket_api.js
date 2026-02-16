@@ -4,7 +4,7 @@ const API_BASE_URL = "http://localhost:8713";
 
 /* ================= TICKET ================= */
 
-export const fetchTickets = (page = 0, size = 20) =>
+export const fetchTickets = (page = 0, size = 30) =>
   axios.get(`${API_BASE_URL}/ticket/all`, {
     params: { page, size }
   });

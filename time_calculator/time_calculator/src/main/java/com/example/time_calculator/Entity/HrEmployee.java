@@ -1,5 +1,6 @@
 package com.example.time_calculator.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +18,11 @@ public class HrEmployee {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "active")
+    private Boolean active;   // ⭐ WAJIB
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonIgnore
     private ResUsers user;
 }

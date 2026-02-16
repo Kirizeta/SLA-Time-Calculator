@@ -5,14 +5,14 @@
 
 body {
   background: linear-gradient(135deg, #e0f2ff, #f8fbff);
-   font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 0;
 }
 
 /* ================= CARD ================= */
 .card {
-  width: 95%;
-  max-width: 1100px;
+  width: 100%;
+  max-width: 2100px;
   margin: 40px auto;
   padding: 24px;
   border-radius: 20px;
@@ -36,7 +36,6 @@ body {
 .excel-table {
   display: grid;
 
-  /* 🔥 PENTING: BUKAN 1fr */
   grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
 
   width: 100%;
@@ -60,7 +59,6 @@ body {
   border-right: 1px solid #e2e8f0;
   font-size: 13px;
   font-weight: 600;
-  color: #1e3a8a;
 }
 
 /* ================= INPUT ================= */

@@ -8,7 +8,7 @@
   border: 1px solid #ffffff;
   border-bottom: none;
   background: #ffffff;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .edit-row:last-child {
@@ -18,7 +18,7 @@
 /* LABEL */
 .edit-row label {
   padding: 8px 10px;
-  background: #e5f0ff;
+  background: #f1f9ff;
   border-right: 1px solid #e5f0ff;
   font-size: 13px;
   font-weight: 600;

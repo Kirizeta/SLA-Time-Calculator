@@ -28,7 +28,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
 
   const [editedRows, setEditedRows] = useState({});
 
-  /* ===== CHANGE ===== */
   const handleChange = (id, field, value) => {
     setEditedRows(prev => ({
       ...prev,
@@ -39,7 +38,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
     }));
   };
 
-  /* ===== CHECK DIRTY ===== */
   const isRowDirty = (msg) => {
     const edited = editedRows[msg.id];
     if (!edited) return false;
@@ -62,7 +60,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
     return false;
   };
 
-  /* ===== SAVE ===== */
   const handleSave = (msg) => {
     const edited = editedRows[msg.id];
     if (!edited || !onSaveMessage) return;
@@ -82,7 +79,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
 
     onSaveMessage(msg.id, payload);
 
-    /* 🔥 RESET DIRTY ROW */
     setEditedRows(prev => {
       const copy = { ...prev };
       delete copy[msg.id];

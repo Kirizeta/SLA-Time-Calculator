@@ -36,7 +36,7 @@ public class MetabaseService {
 
         String token = Jwts.builder()
                 .setClaims(payload)
-                .signWith(key, SignatureAlgorithm.HS256)   // ⭐ WAJIB
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         return metabaseUrl + "/embed/dashboard/" + token +

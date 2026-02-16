@@ -8,9 +8,6 @@ const DashboardHome = () => {
         Dashboard Home
       </h1>
 
-      <div className="card welcome-card">
-        Welcome to Dashboard
-      </div>
 
       <div className="card metabase-card">
         <MetabaseDashboard />

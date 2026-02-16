@@ -45,19 +45,19 @@ const TicketDetail = ({ ticket, onChange, onSave, isDirty }) => {
           <Field label="Ticket Number" value={ticket.ticketNumber} />
 
           <Field label="Company" value={ticket.partner?.name ?? "-"} />
-          <Field label="PIC ID" value={ticket.user?.employee?.name ?? ticket.userId ?? "-"} />
+          <Field label="PIC ID" value={ticket.user?.employee?.name ?? ticket.picName ?? "-"} />
           <Field label="Product" value={ticket.product?.name ?? "-"} />
           <Field label="Priority" value={ticket.priority?.name ?? "-"} />
 
           <Field label="SLA ID" value={ticket.slaId} />
-          <Field label="Response Time" value={ticket.responseTime} />
-          <Field label="Resolution Time" value={ticket.resolutionTime} />
+          <Field label="Target Response Time" value={ticket.responseTime} />
+          <Field label="Target Resolution Time" value={ticket.resolutionTime} />
           <Field label="Countdown Condition" value={ticket.countdownCondition} />
 
           <Field label="Create Date" value={formatDateTime(ticket.createDate)} />
           <Field label="Close Time" value={formatDateTime(ticket.closeTime)} />
           <Field label="Close Date" value={ticket.closeDate} />
-          <Field label="Response To Close" value={ticket.responseToClose} />
+          <Field label="Response To Close (Total Response Time)" value={ticket.responseToClose} />
 
           <Field label="Start Res (No GMT)" value={formatDateTime(ticket.startResolutionTimeNoGmt)} />
           <Field label="End Res (No GMT)" value={formatDateTime(ticket.endResolutionTimeNoGmt)} />
@@ -82,7 +82,7 @@ const TicketDetail = ({ ticket, onChange, onSave, isDirty }) => {
           />
 
           <EditableDateTime
-            label="Start Resolution Time"
+            label="First Respon Time"
             value={ticket.startResolutionTime}
             onChange={(v) => onChange("startResolutionTime", v)}
           />

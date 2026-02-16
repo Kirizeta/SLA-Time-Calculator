@@ -27,7 +27,7 @@ table {
 
 /* ===== TABLE HEADER ===== */
 thead {
-  background: linear-gradient(135deg, #9bacd1, #3b82f6);
+  background: linear-gradient(135deg, #2277e6,#0ea5e9);
 }
 
 thead th {
@@ -35,6 +35,7 @@ thead th {
   text-align: left;
   font-weight: 500;
   font-size: 14px;
+  color: white;
   letter-spacing: 0.3px;
 }
 
