@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
 
       <Sidebar open={sidebarOpen} />
 
-      <div className="layout-right">
+      <div className={`layout-right ${sidebarOpen ? "" : "full"}`}>
         <Topbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
         <div className="layout-content">

@@ -1,84 +1,55 @@
-/* ===== SIDEBAR ===== */
 .sidebar {
-  width: 200px;
-  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 220px;
+  height: 100vh;
+
   background: linear-gradient(180deg,#1e3a8a,#0ea5e9);
   color: white;
+
   padding: 26px 18px;
   display: flex;
   flex-direction: column;
-  transition: width 0.35s ease;
-  overflow: hidden;
+
+  transition: transform 0.35s ease;
+  z-index: 999;
 }
 
+/* OPEN */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* CLOSE (SLIDE OUT) */
 .sidebar.close {
-  width: 80px;
+  transform: translateX(-100%);
 }
 
-/* ===== LOGO AREA ===== */
+/* LOGO */
 .sidebar-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
-  position: relative;
-  height: 120px;
 }
 
-/* ===== BASE LOGO STYLE ===== */
-.logo {
-  position: absolute;
-  transition: all 0.35s ease;
-}
-
-/* FULL LOGO */
 .logo-full {
   width: 170px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: white;
-  padding: 4px;
+  padding: 2px;
+  margin-bottom: 12px;
 }
 
-/* MINI LOGO */
-.logo-mini {
-  width: 55px;
-  border-radius: 50%;
-  background: white;
-  padding: 5px;
-}
-
-/* ===== SHOW / HIDE ANIMATION ===== */
-.logo.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.logo.hide {
-  opacity: 0;
-  transform: scale(0.7);
-}
-
-/* ===== TEXT IT SUPPORT ===== */
+/* TEXT + GARIS */
 .logo-text {
-  margin-top: auto;
   font-size: 13px;
   letter-spacing: 1px;
   position: relative;
   padding-bottom: 10px;
-  transition: all 0.35s ease;
 }
 
-.logo-text.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.logo-text.hide {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* ===== GARIS BAWAH ===== */
 .logo-text::after {
   content: "";
   position: absolute;
@@ -89,22 +60,15 @@
   height: 2px;
   background: rgba(255,255,255,0.7);
   border-radius: 2px;
-  transition: all 0.35s ease;
 }
 
-/* ===== MENU ===== */
+/* MENU */
 .menu-title {
   font-size: 12px;
   margin-bottom: 12px;
   opacity: 0.7;
-  transition: opacity 0.3s;
 }
 
-.sidebar.close .menu-title {
-  opacity: 0;
-}
-
-/* ===== MENU ITEM ===== */
 .menu-item {
   display: flex;
   align-items: center;
@@ -122,9 +86,4 @@
 
 .menu-item.active {
   background: rgba(255,255,255,0.25);
-}
-
-/* HIDE TEXT WHEN COLLAPSE */
-.sidebar.close span {
-  opacity: 0;
 }
