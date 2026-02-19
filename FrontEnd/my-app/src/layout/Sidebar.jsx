@@ -15,15 +15,21 @@ const Sidebar = ({ open }) => {
       <div className="sidebar-menu">
         <p className="menu-title">MENU</p>
 
-        <NavLink to="/" className={({ isActive }) =>
-          isActive ? "menu-item active" : "menu-item"
-        }>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "menu-item active" : "menu-item"
+          }
+        >
           🏠 <span>Dashboard</span>
         </NavLink>
 
-        <NavLink to="/ticket" className={({ isActive }) =>
-          isActive ? "menu-item active" : "menu-item"
-        }>
+        <NavLink
+          to="/ticket"
+          className={({ isActive }) =>
+            isActive ? "menu-item active" : "menu-item"
+          }
+        >
           🧾 <span>Ticket Edit</span>
         </NavLink>
       </div>
