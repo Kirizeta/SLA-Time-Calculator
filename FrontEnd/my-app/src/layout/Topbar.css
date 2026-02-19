@@ -84,6 +84,7 @@
 
 /* LOGOUT */
 .logout-btn {
+  background: rgba(250,0,0,0.8);
   border: none;
   padding: 8px 18px;
   border-radius: 10px;
@@ -96,7 +97,10 @@
   transition: all 0.25s ease;
 }
 
-.logout-btn:hover {
+.logout-btn:not(:disabled){
   background: rgba(250,0,0,0.8);
+}
+
+.logout-btn:hover {
   transform: translateY(-1px);
 }

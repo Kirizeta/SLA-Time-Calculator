@@ -11,12 +11,18 @@ const formatTextDate = (val) => {
     const pad = (n, z = 2) => String(n).padStart(z, "0");
 
     return (
-      d.getFullYear() + "-" +
-      pad(d.getMonth() + 1) + "-" +
-      pad(d.getDate()) + " " +
-      pad(d.getHours()) + ":" +
-      pad(d.getMinutes()) + ":" +
-      pad(d.getSeconds()) + "." +
+      d.getFullYear() +
+      "-" +
+      pad(d.getMonth() + 1) +
+      "-" +
+      pad(d.getDate()) +
+      " " +
+      pad(d.getHours()) +
+      ":" +
+      pad(d.getMinutes()) +
+      ":" +
+      pad(d.getSeconds()) +
+      "." +
       pad(d.getMilliseconds(), 3)
     );
   } catch {
@@ -25,16 +31,15 @@ const formatTextDate = (val) => {
 };
 
 const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
-
   const [editedRows, setEditedRows] = useState({});
 
   const handleChange = (id, field, value) => {
-    setEditedRows(prev => ({
+    setEditedRows((prev) => ({
       ...prev,
       [id]: {
         ...prev[id],
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
@@ -45,17 +50,20 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
     if (
       edited.createDate !== undefined &&
       edited.createDate !== formatTextDate(msg.createDate)
-    ) return true;
+    )
+      return true;
 
     if (
       edited.responseTime !== undefined &&
       edited.responseTime !== msg.responseTime
-    ) return true;
+    )
+      return true;
 
     if (
       edited.resolutionTime !== undefined &&
       edited.resolutionTime !== msg.resolutionTime
-    ) return true;
+    )
+      return true;
 
     return false;
   };
@@ -70,16 +78,14 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
           ? `${edited.createDate.split(" ")[0]}T${edited.createDate.split(" ")[1]}`
           : msg.createDate,
 
-      responseTime:
-        edited.responseTime ?? msg.responseTime,
+      responseTime: edited.responseTime ?? msg.responseTime,
 
-      resolutionTime:
-        edited.resolutionTime ?? msg.resolutionTime
+      resolutionTime: edited.resolutionTime ?? msg.resolutionTime,
     };
 
     onSaveMessage(msg.id, payload);
 
-    setEditedRows(prev => {
+    setEditedRows((prev) => {
       const copy = { ...prev };
       delete copy[msg.id];
       return copy;
@@ -108,7 +114,6 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
             </tr>
           ) : (
             messages.map((m, index) => {
-
               const edited = editedRows[m.id] || {};
               const dirty = isRowDirty(m);
 
@@ -120,16 +125,9 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                     <input
                       type="text"
                       placeholder="YYYY-MM-DD HH:mm:ss.SSS"
-                      value={
-                        edited.createDate ??
-                        formatTextDate(m.createDate)
-                      }
+                      value={edited.createDate ?? formatTextDate(m.createDate)}
                       onChange={(e) =>
-                        handleChange(
-                          m.id,
-                          "createDate",
-                          e.target.value
-                        )
+                        handleChange(m.id, "createDate", e.target.value)
                       }
                     />
                   </td>
@@ -138,16 +136,12 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                     <input
                       type="number"
                       step="0.0001"
-                      value={
-                        edited.responseTime ??
-                        m.responseTime ??
-                        ""
-                      }
+                      value={edited.responseTime ?? m.responseTime ?? ""}
                       onChange={(e) =>
                         handleChange(
                           m.id,
                           "responseTime",
-                          Number(e.target.value)
+                          Number(e.target.value),
                         )
                       }
                     />
@@ -157,16 +151,12 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                     <input
                       type="number"
                       step="0.0001"
-                      value={
-                        edited.resolutionTime ??
-                        m.resolutionTime ??
-                        ""
-                      }
+                      value={edited.resolutionTime ?? m.resolutionTime ?? ""}
                       onChange={(e) =>
                         handleChange(
                           m.id,
                           "resolutionTime",
-                          Number(e.target.value)
+                          Number(e.target.value),
                         )
                       }
                     />
@@ -174,13 +164,13 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
 
                   <td>
                     <button
+                      className="save-btn"
                       disabled={!dirty}
                       onClick={() => handleSave(m)}
                     >
                       Save
                     </button>
                   </td>
-
                 </tr>
               );
             })
