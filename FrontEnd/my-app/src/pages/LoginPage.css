@@ -166,11 +166,10 @@
   align-items: center;
   overflow: hidden;
   filter: blur(0.5px);
+  background: linear-gradient(180deg,#f7a683,#0ea5e9);
 }
 
 
-
-/* gambar cewe */
 .girl-img {
 
   z-index: 4;

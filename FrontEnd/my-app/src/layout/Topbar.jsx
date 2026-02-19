@@ -2,6 +2,7 @@ import React from "react";
 import "./Topbar.css";
 
 const Topbar = ({ toggleSidebar, isOpen }) => {
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -10,6 +11,7 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
 
   return (
     <div className="topbar">
+
       <div className="topbar-left-group">
         <div
           className={`topbar-left ${isOpen ? "open" : ""}`}
@@ -20,7 +22,6 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
           <span></span>
         </div>
 
-        {/* TEXT muncul saat sidebar CLOSE */}
         <span className={`cs-text ${isOpen ? "hide" : "show"}`}>
           Customer Support
         </span>
@@ -35,6 +36,7 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
           Logout
         </button>
       </div>
+
     </div>
   );
 };

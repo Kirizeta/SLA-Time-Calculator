@@ -10,10 +10,10 @@
   margin-left: 220px;
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.35s ease;
+
+  transition: margin-left 0.32s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* FULL MODE (Sidebar Close) */
 .layout-right.full {
   margin-left: 0;
 }

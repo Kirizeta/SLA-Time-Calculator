@@ -13,32 +13,22 @@
   flex-direction: column;
 
   transform: translateX(0);
-  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
   will-change: transform;
 
   z-index: 999;
 }
 
-/* CLOSE */
 .sidebar.close {
   transform: translateX(-100%);
 }
 
-
+/* MENU */
 .sidebar-menu{
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-
-/* OPEN */
-.sidebar.open {
-  transform: translateX(0);
-}
-
-/* CLOSE (SLIDE OUT) */
-.sidebar.close {
-  transform: translateX(-100%);
+  gap: 11px;
 }
 
 /* LOGO */
@@ -92,7 +82,7 @@
   border-radius: 12px;
   text-decoration: none;
   color: white;
-  transition: all 0.2s;
+  transition: background 0.2s;
 }
 
 .menu-item:hover {
