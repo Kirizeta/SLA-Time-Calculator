@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Topbar.css";
 
 const Topbar = ({ toggleSidebar, isOpen }) => {
 
+  const [partnerName, setPartnerName] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8713/auth/me", {
+      withCredentials: true
+    })
+    .then(res => {
+      setPartnerName(res.data);
+    })
+    .catch(err => {
+      console.error("Failed to fetch user", err);
+    });
+  }, []);
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
     window.location.href = "/login";
   };
 
@@ -29,7 +42,7 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
 
       <div className="topbar-right">
         <span className="topbar-info">
-          sysadmin | Date: {new Date().toLocaleDateString()}
+          {partnerName} | Date: {new Date().toLocaleDateString()}
         </span>
 
         <button className="logout-btn" onClick={handleLogout}>

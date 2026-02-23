@@ -23,13 +23,13 @@ public class MetabaseService {
     @Value("${metabase.dashboard.id}")
     private Integer dashboardId;
 
-    public String generateDashboardEmbedUrl() {
+    public String generateDashboardEmbedUrl(String partnerName) {
 
         long exp = System.currentTimeMillis() / 1000 + (10 * 60);
 
         Map<String, Object> payload = new HashMap<>();
         payload.put("resource", Map.of("dashboard", dashboardId));
-        payload.put("params", new HashMap<>());
+        payload.put("params", Map.of("partner_name", partnerName));
         payload.put("exp", exp);
 
         SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

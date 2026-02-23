@@ -20,6 +20,7 @@ const LoginPage = () => {
       const res = await loginApi(login, password);
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data));
 
       window.location.href = "/";
     } catch (err) {
