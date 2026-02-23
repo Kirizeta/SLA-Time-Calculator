@@ -53,4 +53,20 @@ public class AuthController {
 
         return repository.findPartnerNameByLogin(username);
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+
+        ResponseCookie cookie = ResponseCookie.from("AUTH_TOKEN", "")
+                .httpOnly(true)
+                .secure(false) 
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+
+        return "Logout success";
+    }
 }

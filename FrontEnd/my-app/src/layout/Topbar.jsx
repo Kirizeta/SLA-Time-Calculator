@@ -6,20 +6,42 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
 
   const [partnerName, setPartnerName] = useState("");
 
+
   useEffect(() => {
-    axios.get("http://localhost:8713/auth/me", {
-      withCredentials: true
-    })
-    .then(res => {
-      setPartnerName(res.data);
-    })
-    .catch(err => {
-      console.error("Failed to fetch user", err);
-    });
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8713/auth/me",
+          { withCredentials: true }
+        );
+
+        setPartnerName(res.data);
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+
+        window.location.href = "/login";
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  const handleLogout = () => {
-    window.location.href = "/login";
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8713/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+
+
+      window.location.href = "/login";
+
+    } catch (err) {
+      console.error("Logout failed", err);
+      window.location.href = "/login"; 
+    }
   };
 
   return (
@@ -42,7 +64,7 @@ const Topbar = ({ toggleSidebar, isOpen }) => {
 
       <div className="topbar-right">
         <span className="topbar-info">
-          {partnerName} | Date: {new Date().toLocaleDateString()}
+          {partnerName || "Loading..."} | Date: {new Date().toLocaleDateString()}
         </span>
 
         <button className="logout-btn" onClick={handleLogout}>
