@@ -1,4 +1,4 @@
-package com.example.time_calculator.Config;
+package com.example.time_calculator.Security;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.*;

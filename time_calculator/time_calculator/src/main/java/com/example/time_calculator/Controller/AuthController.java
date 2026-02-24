@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,7 +32,10 @@ public class AuthController {
                 request.getPassword()
         );
 
-        String token = jwtService.generateToken(user.getLogin());
+        // 🔥 ambil role dari DB
+        List<String> roles = repository.findGroupNamesByLogin(user.getLogin());
+
+        String token = jwtService.generateToken(user.getLogin(), roles);
 
         ResponseCookie cookie = ResponseCookie.from("AUTH_TOKEN", token)
                 .httpOnly(true)
@@ -68,5 +72,7 @@ public class AuthController {
         response.addHeader("Set-Cookie", cookie.toString());
 
         return "Logout success";
+
+
     }
 }

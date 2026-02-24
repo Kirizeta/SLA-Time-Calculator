@@ -1,5 +1,6 @@
 package com.example.time_calculator.Security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -28,13 +30,20 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 if ("AUTH_TOKEN".equals(cookie.getName())) {
 
-                    String username = jwtService.extractUsername(cookie.getValue());
+                    Claims claims = jwtService.extractClaims(cookie.getValue());
+
+                    String username = claims.getSubject();
+                    List<String> roles = claims.get("roles", List.class);
+
+                    var authorities = roles.stream()
+                            .map(org.springframework.security.core.authority.SimpleGrantedAuthority::new)
+                            .toList();
 
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(
                                     username,
                                     null,
-                                    Collections.emptyList()
+                                    authorities
                             );
 
                     SecurityContextHolder.getContext().setAuthentication(auth);

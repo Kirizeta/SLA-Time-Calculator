@@ -17,10 +17,8 @@ public class MetabaseController {
     @GetMapping("/dashboard")
     public String getDashboard(Authentication authentication) {
 
-        String username = authentication.getName();
+        String partnerName = repository.findPartnerNameByLogin(authentication.getName());
 
-        String partnerName = repository.findPartnerNameByLogin(username);
-
-        return metabaseService.generateDashboardEmbedUrl(partnerName);
+        return metabaseService.generateDashboardEmbedUrl(authentication, partnerName);
     }
 }
