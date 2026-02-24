@@ -7,6 +7,7 @@ const MetabaseDashboard = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
 useEffect(() => {
+  
   setIframeLoaded(false);
   loadDashboard();
 }, []);
@@ -55,13 +56,13 @@ const loadDashboard = async () => {
       {/* ✅ Iframe */}
       {url && (
         <iframe
-  key={url} // 🔥 penting
-  title="Metabase Dashboard"
-  src={url}
-  width="100%"
-  height="700"
-  onLoad={() => setIframeLoaded(true)}
-  className={`metabase-iframe ${
+            key={url} // 🔥 penting
+            title="Metabase Dashboard"
+            src={url}
+            width="100%"
+            height="700"
+            onLoad={() => setIframeLoaded(true)}
+            className={`metabase-iframe ${
     iframeLoaded ? "show" : "hide"
   }`}
 />
