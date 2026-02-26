@@ -13,10 +13,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     try {
       setIsLoading(true);
+      setErrorMessage("");
+
       const res = await loginApi(login, password);
 
       localStorage.setItem("token", res.data.token);
@@ -24,20 +27,34 @@ const LoginPage = () => {
 
       window.location.href = "/";
     } catch (err) {
-      alert("Login gagal");
+      setErrorMessage(err.response?.data?.message || "Login failed. Please try again.");
       setIsLoading(false);
+
+      // auto hide setelah 4 detik
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 4000);
     }
   };
 
   return (
     <div className="login-container">
-      {/* LEFT */}
       <div className="login-card">
         <h2 className="login-title">
           <span className="typing-line">Welcome to IT Support</span>
           <br />
-          <strong className="typing-company">PT Abhimata Persada</strong>
+          <strong className="typing-company">
+            PT Abhimata Persada
+          </strong>
         </h2>
+
+        {/* ERROR ALERT */}
+        {errorMessage && (
+          <div className="error-alert">
+            <span>⚠ {errorMessage}</span>
+            <button onClick={() => setErrorMessage("")}>✕</button>
+          </div>
+        )}
 
         {/* USER INPUT */}
         <div className="input-wrapper">
@@ -77,12 +94,9 @@ const LoginPage = () => {
         </button>
       </div>
 
-      {/* RIGHT BACKGROUND */}
       <div className="login-bg">
         <div className="bg-gradient"></div>
-
         <img src={girlImage} alt="customer service" className="girl-img" />
-
         <img src={logoAbhi} alt="logo" className="logo-overlay" />
       </div>
     </div>
