@@ -1,0 +1,128 @@
+.create-ticket-wrapper {
+  padding: 30px;
+  background: #f7f7f9;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-save {
+  background: #4f6bdc;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background: #3c55b5;
+}
+
+.btn-discard {
+  background: #6c86e8;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* SUBJECT */
+.form-section label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* TWO COLUMN */
+.two-column {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.card h3 {
+  margin-bottom: 20px;
+  color: #6c6bbf;
+}
+
+.card label {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.card select,
+.card input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* INFO ROW */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.state-open {
+  color: green;
+  font-weight: bold;
+}
+
+/* DESCRIPTION */
+.description-section {
+  margin-top: 40px;
+}
+
+.description-section textarea {
+  width: 100%;
+  height: 220px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .two-column {
+    flex-direction: column;
+  }
+
+  .ticket-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}

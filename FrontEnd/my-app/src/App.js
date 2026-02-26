@@ -3,6 +3,8 @@ import LoginPage from "./pages/LoginPage";
 import MainLayout from "./layout/MainLayout";
 import TicketPage from "./pages/TicketPages";
 import DashboardHome from "./pages/DashboardHome";
+import CreateTicketPage from "./pages/CreateTicketPage";
+import DeleteTicketPage from "./pages/DeleteTicketPage";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -34,6 +36,28 @@ function App() {
             <PrivateRoute>
               <MainLayout>
                 <TicketPage />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/ticket/create"
+          element={
+            <PrivateRoute>
+              <MainLayout>
+                <CreateTicketPage />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/ticket/delete"
+          element={
+            <PrivateRoute>
+              <MainLayout>
+                <DeleteTicketPage />
               </MainLayout>
             </PrivateRoute>
           }

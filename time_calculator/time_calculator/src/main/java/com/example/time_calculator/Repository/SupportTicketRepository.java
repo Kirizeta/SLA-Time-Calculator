@@ -5,7 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDateTime;
 
 public interface SupportTicketRepository extends JpaRepository<SupportTicket, Long> {
 
@@ -13,9 +14,12 @@ public interface SupportTicketRepository extends JpaRepository<SupportTicket, Lo
             "partner",
             "product",
             "priority",
-            "user",
-//            "user.employees"
+            "user"
     })
     Page<SupportTicket> findAll(Pageable pageable);
-}
 
+    long countByCreateDateTimeBetween(
+            LocalDateTime start,
+            LocalDateTime end
+    );
+}

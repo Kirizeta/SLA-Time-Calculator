@@ -15,6 +15,7 @@ const Sidebar = ({ open }) => {
       <div className="sidebar-menu">
         <p className="menu-title">MENU</p>
 
+        {/* DASHBOARD */}
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -24,14 +25,37 @@ const Sidebar = ({ open }) => {
           🏠 <span>Dashboard</span>
         </NavLink>
 
+        {/* CREATE TICKET */}
         <NavLink
-          to="/ticket"
+          to="/ticket/create"
           className={({ isActive }) =>
             isActive ? "menu-item active" : "menu-item"
           }
         >
+          📝 <span>Create Ticket</span>
+        </NavLink>
+
+        {/* EDIT / LIST TICKET */}
+        <NavLink
+          to="/ticket"
+            end
+              className={({ isActive }) =>
+           isActive ? "menu-item active" : "menu-item"
+          }
+        >
           🧾 <span>Ticket Edit</span>
         </NavLink>
+
+        {/* DELETE TICKET */}
+        <NavLink
+          to="/ticket/delete"
+          className={({ isActive }) =>
+            isActive ? "menu-item active danger" : "menu-item danger"
+          }
+        >
+          🗑️ <span>Delete Ticket</span>
+        </NavLink>
+
       </div>
     </div>
   );
