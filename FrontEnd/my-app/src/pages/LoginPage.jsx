@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { loginApi } from "../api/authApi";
 import "./LoginPage.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 import eyeIcon from "../Picture/eye.png";
 import hiddenIcon from "../Picture/hidden.png";
@@ -92,8 +93,11 @@ const LoginPage = () => {
         >
           {isLoading ? "Loading..." : "Log In"}
         </button>
+         <motion.p className="mt-10 text-center text-xs text-slate-400">
+            © {new Date().getFullYear()} PT Abhimata Persada. All rights reserved.
+          </motion.p>
       </div>
-
+         
       <div className="login-bg">
         <div className="bg-gradient"></div>
         <img src={girlImage} alt="customer service" className="girl-img" />

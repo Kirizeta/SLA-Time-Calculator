@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./Sidebar.css";
+// import "./Sidebar.css";
 
 import LogoFull from "../Picture/Logofix2.png";
 import { FiHome, FiPlusCircle, FiList, FiTrash2 } from "react-icons/fi";

@@ -45,9 +45,9 @@ const Field = ({ label, value }) => (
 ───────────────────────────────────────── */
 const SectionHeader = ({ icon: Icon, title }) => (
   <div className="flex items-center gap-3 mb-4">
-    <div className="p-2 bg-blue-50 rounded-xl text-blue-600">
-      <Icon size={18} />
-    </div>
+<div className="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-500 text-white rounded-xl">
+  <Icon size={16} />
+</div>
     <h2 className="text-lg font-semibold text-slate-800">{title}</h2>
   </div>
 );
@@ -134,21 +134,24 @@ const TicketDetail = ({ ticket, onChange, onSave, isDirty }) => {
             />
           </div>
 
-          <div className="mt-5 flex items-center gap-3">
+         <div className="mt-5 flex items-center gap-3">
             <button
               disabled={!isDirty}
               onClick={onSave}
-              className={`flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-xl transition-all ${
-                isDirty
-                  ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:shadow-lg hover:-translate-y-0.5"
-                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
-              }`}
+              className="flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-xl transition-all
+                         bg-gradient-to-r from-blue-600 to-blue-500 text-white
+                         hover:shadow-lg hover:-translate-y-0.5
+                         disabled:opacity-50 disabled:cursor-not-allowed
+                         disabled:hover:shadow-none disabled:hover:translate-y-0"
             >
               <FiSave size={15} />
               Save Changes
             </button>
+            
             {isDirty && (
-              <span className="text-xs text-amber-500 font-medium">● Unsaved changes</span>
+              <span className="text-xs text-amber-500 font-medium">
+                ● Unsaved changes
+              </span>
             )}
           </div>
         </div>

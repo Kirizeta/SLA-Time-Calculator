@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./TicketMassegeTable.css";
+// import "./TicketMassegeTable.css";
 import { FiSave, FiMessageSquare } from "react-icons/fi";
 
 /* ===== FORMAT DATE ===== */
@@ -97,7 +97,7 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mt-6">
       {/* Header */}
       <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100">
-        <div className="p-2 bg-blue-50 rounded-xl text-blue-600">
+        <div className="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-500 text-white rounded-xl">
           <FiMessageSquare size={18} />
         </div>
         <h2 className="text-lg font-semibold text-slate-800">Ticket Messages</h2>
@@ -168,15 +168,14 @@ const TicketMessageTable = ({ messages = [], onSaveMessage }) => {
                       />
                     </td>
 
-                    <td className="px-4 py-2">
+                   <td className="px-4 py-2">
                       <button
                         disabled={!dirty}
                         onClick={() => handleSave(m)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                          dirty
-                            ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:shadow-md hover:-translate-y-0.5"
-                            : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                        }`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all 
+                                   bg-gradient-to-r from-blue-600 to-blue-500 text-white
+                                   hover:shadow-md hover:-translate-y-0.5
+                                   disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0"
                       >
                         <FiSave size={12} /> Save
                       </button>
