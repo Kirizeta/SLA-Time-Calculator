@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./CreateTicketPage.css";
 
 function CreateTicketPage() {
-
   /* ================= STATE ================= */
 
   const [form, setForm] = useState({
@@ -12,7 +10,7 @@ function CreateTicketPage() {
     priorityId: "",
     productId: "",
     descriptionText: "",
-    channel: "Staff"
+    channel: "Staff",
   });
 
   const [customers, setCustomers] = useState([]);
@@ -30,15 +28,20 @@ function CreateTicketPage() {
   const loadDropdown = async () => {
     try {
       const [custRes, prodRes, prioRes] = await Promise.all([
-        axios.get("http://localhost:8713/dropdown/customers", { withCredentials: true }),
-        axios.get("http://localhost:8713/dropdown/products", { withCredentials: true }),
-        axios.get("http://localhost:8713/dropdown/priorities", { withCredentials: true }),
+        axios.get("http://localhost:8713/dropdown/customers", {
+          withCredentials: true,
+        }),
+        axios.get("http://localhost:8713/dropdown/products", {
+          withCredentials: true,
+        }),
+        axios.get("http://localhost:8713/dropdown/priorities", {
+          withCredentials: true,
+        }),
       ]);
 
       setCustomers(custRes.data);
       setProducts(prodRes.data);
       setPriorities(prioRes.data);
-
     } catch (error) {
       console.error("Dropdown error:", error);
     }
@@ -49,7 +52,7 @@ function CreateTicketPage() {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -64,11 +67,9 @@ function CreateTicketPage() {
     try {
       setLoading(true);
 
-      await axios.post(
-        "http://localhost:8713/ticket/create",
-        form,
-        { withCredentials: true }
-      );
+      await axios.post("http://localhost:8713/ticket/create", form, {
+        withCredentials: true,
+      });
 
       alert("Ticket Created Successfully");
 
@@ -78,9 +79,8 @@ function CreateTicketPage() {
         priorityId: "",
         productId: "",
         descriptionText: "",
-        channel: "Staff"
+        channel: "Staff",
       });
-
     } catch (error) {
       console.error(error);
       alert("Failed to create ticket");
@@ -92,15 +92,14 @@ function CreateTicketPage() {
   /* ================= UI ================= */
 
   return (
-    <div className="create-ticket-wrapper">
-
+    <div className="p-8 bg-[#f7f7f9] min-h-screen">
       {/* HEADER */}
-      <div className="ticket-header">
-        <h2>Create Ticket / New</h2>
+      <div className="flex justify-between items-center mb-8 max-md:flex-col max-md:items-start max-md:gap-4">
+        <h2 className="text-xl font-semibold">Create Ticket / New</h2>
 
-        <div className="button-group">
+        <div className="flex gap-3">
           <button
-            className="btn-save"
+            className="bg-[#4f6bdc] hover:bg-[#3c55b5] text-white px-5 py-2 rounded-md disabled:opacity-60"
             onClick={handleSave}
             disabled={loading}
           >
@@ -108,7 +107,7 @@ function CreateTicketPage() {
           </button>
 
           <button
-            className="btn-discard"
+            className="bg-[#6c86e8] text-white px-5 py-2 rounded-md"
             onClick={() => window.location.reload()}
           >
             ✕ Discard
@@ -117,28 +116,29 @@ function CreateTicketPage() {
       </div>
 
       {/* SUBJECT */}
-      <div className="form-section">
-        <label>Subject</label>
+      <div>
+        <label className="block mb-1.5 font-medium">Subject</label>
         <input
           type="text"
           name="subject"
           value={form.subject}
           onChange={handleChange}
+          className="w-full p-2.5 border border-gray-300 rounded-md"
         />
       </div>
 
       {/* TWO COLUMN */}
-      <div className="two-column">
-
+      <div className="flex gap-8 mt-8 max-md:flex-col">
         {/* LEFT SIDE */}
-        <div className="card">
-          <h3>Customer Info</h3>
+        <div className="flex-1 bg-white p-6 rounded-xl border border-gray-200">
+          <h3 className="mb-5 text-[#6c6bbf] font-semibold">Customer Info</h3>
 
-          <label>Customer</label>
+          <label className="block mt-4 text-sm">Customer</label>
           <select
             name="partnerId"
             value={form.partnerId}
             onChange={handleChange}
+            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
           >
             <option value="">Select Customer</option>
             {customers.map((cust) => (
@@ -148,43 +148,45 @@ function CreateTicketPage() {
             ))}
           </select>
 
-                    <label>Customer Name</label>
+          <label className="block mt-4 text-sm">Customer Name</label>
           <input
             type="text"
             name="personName"
             value={form.personName}
             onChange={handleChange}
+            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
           />
 
-          <label>Email</label>
+          <label className="block mt-4 text-sm">Email</label>
           <input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
+            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
           />
-
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="card">
-          <h3>Ticket Info</h3>
+        <div className="flex-1 bg-white p-6 rounded-xl border border-gray-200">
+          <h3 className="mb-5 text-[#6c6bbf] font-semibold">Ticket Info</h3>
 
-          <div className="info-row">
+          <div className="flex justify-between mb-2.5">
             <span>State</span>
-            <span className="state-open">Open</span>
+            <span className="text-green-600 font-bold">Open</span>
           </div>
 
-          <div className="info-row">
+          <div className="flex justify-between mb-2.5">
             <span>Channel</span>
             <span>Staff</span>
           </div>
 
-          <label>Priority</label>
+          <label className="block mt-4 text-sm">Priority</label>
           <select
             name="priorityId"
             value={form.priorityId}
             onChange={handleChange}
+            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
           >
             <option value="">Select Priority</option>
             {priorities.map((prio) => (
@@ -194,11 +196,12 @@ function CreateTicketPage() {
             ))}
           </select>
 
-          <label>Product</label>
+          <label className="block mt-4 text-sm">Product</label>
           <select
             name="productId"
             value={form.productId}
             onChange={handleChange}
+            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
           >
             <option value="">Select Product</option>
             {products.map((prod) => (
@@ -207,22 +210,20 @@ function CreateTicketPage() {
               </option>
             ))}
           </select>
-
         </div>
-
       </div>
 
       {/* DESCRIPTION */}
-      <div className="description-section">
-        <h3>Description</h3>
+      <div className="mt-10">
+        <h3 className="mb-3 font-semibold">Description</h3>
 
         <textarea
           name="descriptionText"
           value={form.descriptionText}
           onChange={handleChange}
+          className="w-full h-[220px] p-3 border border-gray-300 rounded-lg resize-y"
         />
       </div>
-
     </div>
   );
 }

@@ -1,27 +1,25 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
-import "./MainLayout.css";
 
 const MainLayout = ({ children }) => {
-
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div className="layout">
-
+    <div className="flex min-h-screen bg-[#eef2f6]">
       <Sidebar open={sidebarOpen} />
 
-      <div className={`layout-right ${sidebarOpen ? "" : "full"}`}>
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          sidebarOpen ? "ml-[220px]" : "ml-0"
+        }`}
+      >
         <Topbar toggleSidebar={toggleSidebar} isOpen={sidebarOpen} />
 
-        <div className="layout-content">
-          {children}
-        </div>
+        <div className="p-[25px] w-full overflow-x-hidden">{children}</div>
       </div>
-
     </div>
   );
 };
